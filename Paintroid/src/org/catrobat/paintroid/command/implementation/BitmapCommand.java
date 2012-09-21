@@ -21,7 +21,6 @@
  *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-
 package org.catrobat.paintroid.command.implementation;
 
 import org.catrobat.paintroid.PaintroidApplication;
@@ -37,6 +36,8 @@ public class BitmapCommand extends BaseCommand {
 	public BitmapCommand(Bitmap bitmap) {
 		if (bitmap != null) {
 			mBitmap = Bitmap.createBitmap(bitmap);
+			bitmap.recycle();
+			bitmap = null;
 		}
 	}
 
@@ -49,7 +50,8 @@ public class BitmapCommand extends BaseCommand {
 			if (bitmap != null) {
 				bitmap.eraseColor(Color.TRANSPARENT);
 			}
-			PaintroidApplication.DRAWING_SURFACE.setBitmap(mBitmap.copy(Config.ARGB_8888, true));
+			PaintroidApplication.DRAWING_SURFACE.setBitmap(mBitmap.copy(
+					Config.ARGB_8888, true));
 
 			if (mFileToStoredBitmap == null) {
 				storeBitmap();

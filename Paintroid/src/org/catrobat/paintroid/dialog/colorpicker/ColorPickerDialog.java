@@ -105,8 +105,6 @@ public class ColorPickerDialog extends BaseDialog {
 						changeNewColor(color);
 					}
 				});
-		// mColorPickerView.mColorPickerScrollView = (ScrollView)
-		// findViewById(R.id.colorpicker_scroll_view);
 	}
 
 	public void setInitialColor(int color) {

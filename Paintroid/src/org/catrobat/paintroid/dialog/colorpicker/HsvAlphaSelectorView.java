@@ -66,6 +66,7 @@ public class HsvAlphaSelectorView extends LinearLayout {
 	private ImageView alphaValueSliderImage;
 	private int minContentOffset = 0;
 	private ImageView alphaImageView;
+	public Bitmap mDrawCache = null;
 
 	private int alpha = 0;
 	private int color = Color.WHITE;
@@ -214,8 +215,11 @@ public class HsvAlphaSelectorView extends LinearLayout {
 		}
 		Paint paint = new Paint();
 		Shader shader;
-		Bitmap drawCache = null;
-		if (drawCache == null) {
+		if (mDrawCache != null) {
+			mDrawCache.recycle();
+			mDrawCache = null;
+		}
+		if (mDrawCache == null) {
 
 			int colorFullAlpha = color | 0xFF000000;
 			int colorNoAlpha = color & 0x00FFFFFF;
@@ -225,13 +229,13 @@ public class HsvAlphaSelectorView extends LinearLayout {
 
 			paint.setShader(shader);
 
-			drawCache = Bitmap.createBitmap(alphaImageView.getWidth(),
+			mDrawCache = Bitmap.createBitmap(alphaImageView.getWidth(),
 					alphaImageView.getHeight(), Bitmap.Config.ARGB_8888);
-			Canvas cacheCanvas = new Canvas(drawCache);
+			Canvas cacheCanvas = new Canvas(mDrawCache);
 			cacheCanvas.drawRect(0.f, 0.f, alphaImageView.getWidth(),
 					alphaImageView.getHeight(), paint);
 
-			alphaImageView.setImageBitmap(drawCache);
+			alphaImageView.setImageBitmap(mDrawCache);
 		}
 	}
 

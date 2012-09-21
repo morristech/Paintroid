@@ -21,9 +21,9 @@
  *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-
 package org.catrobat.paintroid;
 
+import org.catrobat.paintroid.bitmap.PaintroidBitmapStorageFactory;
 import org.catrobat.paintroid.command.CommandManager;
 import org.catrobat.paintroid.command.implementation.CommandManagerImplementation;
 import org.catrobat.paintroid.tools.Tool;
@@ -42,11 +42,12 @@ public class PaintroidApplication extends Application {
 	public static CommandManager COMMAND_MANAGER;
 	public volatile static Tool CURRENT_TOOL;
 	public static Perspective CURRENT_PERSPECTIVE;
+	public static PaintroidBitmapStorageFactory BITMAP_STORAGE_FACTORY;
 
 	@Override
 	public void onCreate() {
 		super.onCreate();
-
+		BITMAP_STORAGE_FACTORY = new PaintroidBitmapStorageFactory();
 		APPLICATION_CONTEXT = getApplicationContext();
 		COMMAND_MANAGER = new CommandManagerImplementation(APPLICATION_CONTEXT);
 

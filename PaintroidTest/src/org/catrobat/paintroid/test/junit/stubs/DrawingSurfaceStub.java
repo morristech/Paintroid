@@ -89,4 +89,11 @@ public class DrawingSurfaceStub implements DrawingSurface {
 		// TODO Auto-generated method stub
 	}
 
+	@Override
+	public boolean isBitmapRecycled() {
+		if (mBitmap != null)
+			return mBitmap.isRecycled();
+		return true;
+	}
+
 }

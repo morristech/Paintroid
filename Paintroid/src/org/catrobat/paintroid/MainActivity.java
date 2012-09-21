@@ -157,6 +157,7 @@ public class MainActivity extends MenuFileActivity {
 		PaintroidApplication.COMMAND_MANAGER.resetAndClear();
 		((DrawingSurfaceImplementation) PaintroidApplication.DRAWING_SURFACE)
 				.recycleBitmap();
+		// PaintroidApplication.BITMAP_STORAGE_FACTORY.clearAllBitmaps();
 		super.onDestroy();
 	}
 
@@ -340,6 +341,9 @@ public class MainActivity extends MenuFileActivity {
 				PaintroidApplication.CURRENT_TOOL.getDrawPaint());
 		Tool tool = Utils.createTool(changeToToolType, this);
 		if (tool != null) {
+			PaintroidApplication.CURRENT_TOOL.freeRessources();
+			((DrawingSurfaceImplementation) (PaintroidApplication.DRAWING_SURFACE))
+					.setSurfaceCanBeUsed(false);
 			mToolbar.setTool(tool);
 			PaintroidApplication.CURRENT_TOOL = tool;
 			PaintroidApplication.CURRENT_TOOL.setDrawPaint(tempPaint);
@@ -354,6 +358,9 @@ public class MainActivity extends MenuFileActivity {
 					.setIcon(tool
 							.getAttributeButtonResource(ToolButtonIDs.BUTTON_ID_PARAMETER_BOTTOM_2));
 		}
+
+		((DrawingSurfaceImplementation) (PaintroidApplication.DRAWING_SURFACE))
+				.setSurfaceCanBeUsed(true);
 	}
 
 	private void importPngToFloatingBox(String filePath) {

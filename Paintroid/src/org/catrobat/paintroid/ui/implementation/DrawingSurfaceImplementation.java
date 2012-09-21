@@ -180,7 +180,7 @@ public class DrawingSurfaceImplementation extends SurfaceView implements
 	@Override
 	public synchronized Bitmap getBitmap() {
 		if (mWorkingBitmap != null && mWorkingBitmap.isRecycled() == false) {
-			return Bitmap.createBitmap(mWorkingBitmap);
+			return mWorkingBitmap.copy(mWorkingBitmap.getConfig(), true);
 		} else {
 			return null;
 		}
@@ -253,4 +253,25 @@ public class DrawingSurfaceImplementation extends SurfaceView implements
 		return mWorkingBitmap.getHeight();
 	}
 
+	@Override
+	public boolean isBitmapRecycled() {
+		if (mWorkingBitmap != null) {
+			return mWorkingBitmap.isRecycled();
+		}
+		return true;
+	}
+
+	@Override
+	protected void finalize() throws Throwable {
+		mDrawingThread.stop();
+		if (mWorkingBitmap != null) {
+			mWorkingBitmap.recycle();
+			mWorkingBitmap = null;
+		}
+		super.finalize();
+	}
+
+	public void setSurfaceCanBeUsed(boolean surfaceCanBeUsed) {
+		mSurfaceCanBeUsed = surfaceCanBeUsed;
+	}
 }

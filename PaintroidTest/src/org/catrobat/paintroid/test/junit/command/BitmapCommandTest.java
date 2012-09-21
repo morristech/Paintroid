@@ -39,10 +39,14 @@ import android.graphics.Bitmap.Config;
 import android.graphics.Color;
 
 public class BitmapCommandTest extends CommandTestSetup {
+
+	private Bitmap mOriginalBitmapCopy = null;
+
 	@Override
 	@Before
 	protected void setUp() throws Exception {
 		super.setUp();
+		mOriginalBitmapCopy = Bitmap.createBitmap(mBitmapUnderTest);
 		mCommandUnderTest = new BitmapCommand(mBitmapUnderTest);
 		mCommandUnderTestNull = new BitmapCommand(null);
 		mCanvasBitmapUnderTest.eraseColor(BITMAP_BASE_COLOR - 10);
@@ -52,13 +56,15 @@ public class BitmapCommandTest extends CommandTestSetup {
 	@After
 	protected void tearDown() throws Exception {
 		super.tearDown();
+		mOriginalBitmapCopy.recycle();
+		mOriginalBitmapCopy = null;
 	}
 
 	@Test
 	public void testRunInsertNewBitmap() {
 		Bitmap hasToBeTransparentBitmap = Bitmap.createBitmap(10, 10, Config.ARGB_8888);
 		hasToBeTransparentBitmap.eraseColor(Color.DKGRAY);
-		Bitmap bitmapToCompare = mBitmapUnderTest.copy(Config.ARGB_8888, false);
+		Bitmap bitmapToCompare = mOriginalBitmapCopy.copy(Config.ARGB_8888, false);
 		try {
 
 			assertNull("There should not be a file for a bitmap at the beginning.",
@@ -93,7 +99,7 @@ public class BitmapCommandTest extends CommandTestSetup {
 
 	@Test
 	public void testRunReplaceBitmapFromFileSystem() {
-		Bitmap bitmapToCompare = mBitmapUnderTest.copy(Config.ARGB_8888, false);
+		Bitmap bitmapToCompare = mOriginalBitmapCopy.copy(Config.ARGB_8888, false);
 		try {
 			assertNull(
 					"There should not be a file in the system (hint: check if too many tests crashed and no files were deleted)",
@@ -121,7 +127,7 @@ public class BitmapCommandTest extends CommandTestSetup {
 	@Test
 	public void testBitmapCommand() {
 		try {
-			PaintroidAsserts.assertBitmapEquals(mBitmapUnderTest,
+			PaintroidAsserts.assertBitmapEquals(mOriginalBitmapCopy,
 					(Bitmap) PrivateAccess.getMemberValue(BaseCommand.class, mCommandUnderTest, "mBitmap"));
 		} catch (Exception e) {
 			fail("Failed with exception:" + e.toString());

@@ -242,6 +242,9 @@ public class HsvSaturationSelectorView extends FrameLayout {
 
 	public void setHue(float hue) {
 		this.hue = hue;
+		if (drawCache != null) {
+			drawCache.recycle();
+		}
 		drawCache = null;
 		invalidate();
 	}
