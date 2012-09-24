@@ -341,9 +341,9 @@ public class MainActivity extends MenuFileActivity {
 				PaintroidApplication.CURRENT_TOOL.getDrawPaint());
 		Tool tool = Utils.createTool(changeToToolType, this);
 		if (tool != null) {
-			PaintroidApplication.CURRENT_TOOL.freeRessources();
 			((DrawingSurfaceImplementation) (PaintroidApplication.DRAWING_SURFACE))
 					.setSurfaceCanBeUsed(false);
+			PaintroidApplication.CURRENT_TOOL.freeRessources();
 			mToolbar.setTool(tool);
 			PaintroidApplication.CURRENT_TOOL = tool;
 			PaintroidApplication.CURRENT_TOOL.setDrawPaint(tempPaint);
