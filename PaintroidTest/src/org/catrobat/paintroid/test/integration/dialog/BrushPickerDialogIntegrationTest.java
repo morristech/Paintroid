@@ -63,7 +63,7 @@ public class BrushPickerDialogIntegrationTest extends BaseIntegrationTestClass {
 		assertEquals(strokeWidthBar.getProgress(), 25);
 		int newStrokeWidth = 80;
 		int paintStrokeWidth = -1;
-		Drawable originalDrawable = mButtonParameterTop2.getBackground();
+		Drawable originalDrawable = mButtonParameterTop1.getBackground();
 		mSolo.setProgressBar(0, newStrokeWidth);
 		assertTrue("Waiting for set stroke width ", mSolo.waitForView(LinearLayout.class, 1, TIMEOUT));
 		assertEquals(strokeWidthBar.getProgress(), newStrokeWidth);
@@ -87,7 +87,7 @@ public class BrushPickerDialogIntegrationTest extends BaseIntegrationTestClass {
 		paintStrokeWidth = (int) strokePaint.getStrokeWidth();
 		assertEquals(paintStrokeWidth, newStrokeWidth);
 		assertEquals(strokePaint.getStrokeCap(), Cap.SQUARE);
-		assertNotSame(originalDrawable, mButtonParameterTop2.getBackground());
+		assertNotSame(originalDrawable, mButtonParameterTop1.getBackground());
 	}
 
 	@Test

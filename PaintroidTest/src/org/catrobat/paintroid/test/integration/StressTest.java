@@ -74,7 +74,7 @@ public class StressTest extends BaseIntegrationTestClass {
 			try {
 				setUp();
 				Log.i("Paintroid", prefix + "Current run " + currentRun + " suetUP sleeping " + sleep);
-				// Thread.sleep(sleep);
+				Thread.sleep(sleep);
 				// memoryLogger();
 				int numberOfTool = ToolType.values().length;
 				int toolToSelect = currentRun % numberOfTool;
