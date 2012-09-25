@@ -63,17 +63,17 @@ public class StressTest extends BaseIntegrationTestClass {
 			try {
 				tearDown();
 				System.gc();
-				Log.i("Paintroid", prefix + "Current run " + currentRun + " td sleeping" + sleep);
+				Log.i("Paintroid", prefix + "Current run " + currentRun + " teaDown sleeping" + sleep);
 				Thread.sleep(sleep);
 			} catch (Exception e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
-			Log.i("Paintroid", prefix + "Current run " + currentRun + " tear down done");
+			Log.i("Paintroid", prefix + "Current run " + currentRun + " teaDown done");
 			sleep = randomGenerator.nextInt(maxRandomSleep);
 			try {
 				setUp();
-				Log.i("Paintroid", prefix + "Current run " + currentRun + " su sleeping " + sleep);
+				Log.i("Paintroid", prefix + "Current run " + currentRun + " suetUP sleeping " + sleep);
 				// Thread.sleep(sleep);
 				// memoryLogger();
 				int numberOfTool = ToolType.values().length;

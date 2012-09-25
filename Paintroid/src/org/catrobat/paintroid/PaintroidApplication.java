@@ -43,6 +43,7 @@ public class PaintroidApplication extends Application {
 	public volatile static Tool CURRENT_TOOL;
 	public static Perspective CURRENT_PERSPECTIVE;
 	public static PaintroidBitmapStorageFactory BITMAP_STORAGE_FACTORY;
+	public static boolean IS_OPENED_FROM_CATROID = false;
 
 	@Override
 	public void onCreate() {
