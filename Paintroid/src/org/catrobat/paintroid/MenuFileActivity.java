@@ -237,7 +237,8 @@ public abstract class MenuFileActivity extends SherlockActivity {
 				dialog.dismiss();
 			}
 		};
-		thread.start();
+		runOnUiThread(thread);
+		// thread.start();
 	}
 
 	protected void saveFile(String fileName) {
