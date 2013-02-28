@@ -46,6 +46,7 @@ import android.util.Log;
 import android.view.View;
 import android.widget.GridView;
 import android.widget.ImageButton;
+import android.widget.ImageView;
 
 import com.jayway.android.robotium.solo.Solo;
 
@@ -127,10 +128,10 @@ public class BaseIntegrationTestClass extends ActivityInstrumentationTestCase2<M
 		mMenuBottomParameter2 = null;
 
 		Log.i(PaintroidApplication.TAG, "td " + step++);
-		if (mSolo.getAllOpenedActivities().size() > 0) {
-			Log.i(PaintroidApplication.TAG, "td finish " + step++);
-			mSolo.finishOpenedActivities();
-		}
+		// if (mSolo).getAllOpenedActivities().size() > 0) {
+		// Log.i(PaintroidApplication.TAG, "td finish " + step++);
+		mSolo.finishOpenedActivities();
+		// }
 		Log.i(PaintroidApplication.TAG, "td finish " + step++);
 		super.tearDown();
 		Log.i(PaintroidApplication.TAG, "td finish " + step++);
@@ -148,10 +149,11 @@ public class BaseIntegrationTestClass extends ActivityInstrumentationTestCase2<M
 			mSolo.clickOnView(mMenuBottomTool);
 			Log.i(PaintroidApplication.TAG, "clicked on bottom button tool");
 			assertTrue("Waiting for the ToolMenu to open", mSolo.waitForView(GridView.class, 1, TIMEOUT));
-			if (toolButtonInfoArray[1] != mSolo.getCurrentImageViews().size()) {
+
+			if (toolButtonInfoArray[1] != mSolo.getCurrentViews(ImageView.class).size()) {
 				mSolo.sleep(2000);
 				assertEquals("Wrong number of images possible fail click on image", toolButtonInfoArray[1], mSolo
-						.getCurrentImageViews().size());
+						.getCurrentViews(ImageView.class).size());
 			}
 			Log.i(PaintroidApplication.TAG, "click on tool image");
 			mSolo.clickOnImage(toolButtonInfoArray[0]);
@@ -169,7 +171,7 @@ public class BaseIntegrationTestClass extends ActivityInstrumentationTestCase2<M
 	protected void clickLongOnTool(ToolType toolType) {
 		mSolo.clickOnView(mMenuBottomTool);
 		assertTrue("Waiting for the ToolMenu to open", mSolo.waitForView(GridView.class, 1, TIMEOUT));
-		ArrayList<GridView> gridViews = mSolo.getCurrentGridViews();
+		ArrayList<GridView> gridViews = mSolo.getCurrentViews(GridView.class);
 		assertEquals("One GridView should be visible", gridViews.size(), 1);
 		GridView toolGrid = gridViews.get(0);
 		assertEquals("GridView is Tools Gridview", toolGrid.getId(), R.id.gridview_tools_menu);

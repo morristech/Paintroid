@@ -42,7 +42,7 @@ public class MainActivityIntegrationTest extends BaseIntegrationTestClass {
 		mSolo.clickOnMenuItem(buttonAbout, true);
 		mSolo.sleep(500);
 
-		ArrayList<TextView> textViewList = mSolo.getCurrentTextViews(null);
+		ArrayList<TextView> textViewList = mSolo.getCurrentViews(TextView.class, null);
 
 		String aboutTextExpected = getActivity().getString(R.string.about_content);
 		String licenseText = getActivity().getString(R.string.licence_type_paintroid);
@@ -74,7 +74,7 @@ public class MainActivityIntegrationTest extends BaseIntegrationTestClass {
 		mSolo.clickOnText(buttonNoCaption);
 		mSolo.sleep(500);
 
-		ArrayList<TextView> textViewList = mSolo.getCurrentTextViews(null);
+		ArrayList<TextView> textViewList = mSolo.getCurrentViews(TextView.class, null);
 		for (TextView textView : textViewList) {
 			String dialogTextReal = textView.getText().toString();
 			assertNotSame("About should be closed by now", dialogTextExpected, dialogTextReal);
@@ -93,14 +93,14 @@ public class MainActivityIntegrationTest extends BaseIntegrationTestClass {
 
 		assertNotNull("Quit dialog text not correct, maybe Quit Dialog not started as expected", dialogTextView);
 
-		ArrayList<TextView> textViewList = mSolo.getCurrentTextViews(null);
+		ArrayList<TextView> textViewList = mSolo.getCurrentViews(TextView.class, null);
 		assertNotSame("Main Activity should still be here and have textviews", 0, textViewList.size());
 
 		String buttonYesCaption = getActivity().getString(R.string.closing_security_question_yes);
 		mSolo.clickOnText(buttonYesCaption);
 		mSolo.sleep(500);
 
-		textViewList = mSolo.getCurrentTextViews(null);
+		textViewList = mSolo.getCurrentViews(TextView.class, null);
 		assertEquals("Main Activity should be gone by now", 0, textViewList.size());
 
 	}
@@ -133,11 +133,11 @@ public class MainActivityIntegrationTest extends BaseIntegrationTestClass {
 		clickLongOnTool(toolToClick);
 		mSolo.sleep(100);
 
-		ArrayList<TextView> viewList = mSolo.getCurrentTextViews(null);
+		ArrayList<TextView> viewList = mSolo.getCurrentViews(TextView.class, null);
 
 		assertEquals("There should be exactly 3 views in the Help dialog", 3, viewList.size());
 
-		String helpText = mSolo.getCurrentTextViews(null).get(indexHelpText).getText().toString();
+		String helpText = mSolo.getCurrentViews(TextView.class, null).get(indexHelpText).getText().toString();
 		String buttonDoneText = viewList.get(indexDoneButton).getText().toString();
 
 		String helpTextExpected = mSolo.getString(idExpectedHelptext);
@@ -148,7 +148,7 @@ public class MainActivityIntegrationTest extends BaseIntegrationTestClass {
 
 		mSolo.clickOnButton(buttonDoneText);
 
-		viewList = mSolo.getCurrentTextViews(null);
+		viewList = mSolo.getCurrentViews(TextView.class, null);
 
 		assertNotSame("Helpdialog should not be open any more after clicking done.", 3, viewList.size());
 	}

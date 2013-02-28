@@ -73,7 +73,7 @@ public class BrushPickerDialogIntegrationTest extends BaseIntegrationTestClass {
 		String brushWidthText = (String) brushWidthTextView.getText();
 		assertEquals("Wrong brush width displayed", Integer.valueOf(brushWidthText), Integer.valueOf(25));
 
-		ArrayList<ProgressBar> progressBars = mSolo.getCurrentProgressBars();
+		ArrayList<ProgressBar> progressBars = mSolo.getCurrentViews(ProgressBar.class);
 		assertEquals(progressBars.size(), 1);
 		SeekBar strokeWidthBar = (SeekBar) progressBars.get(0);
 		assertEquals(strokeWidthBar.getProgress(), 25);
@@ -115,7 +115,7 @@ public class BrushPickerDialogIntegrationTest extends BaseIntegrationTestClass {
 		Log.i(PaintroidApplication.TAG, "testBrushPickerDialogOnBackPressed " + step++);
 		mSolo.sleep(2000);
 		Log.i(PaintroidApplication.TAG, "testBrushPickerDialogOnBackPressed " + step++);
-		ArrayList<ProgressBar> progressBars = mSolo.getCurrentProgressBars();
+		ArrayList<ProgressBar> progressBars = mSolo.getCurrentViews(ProgressBar.class);
 		Log.i(PaintroidApplication.TAG, "testBrushPickerDialogOnBackPressed " + step++);
 		assertEquals(progressBars.size(), 1);
 		Log.i(PaintroidApplication.TAG, "testBrushPickerDialogOnBackPressed " + step++);
@@ -166,14 +166,14 @@ public class BrushPickerDialogIntegrationTest extends BaseIntegrationTestClass {
 		Log.i(PaintroidApplication.TAG, "testBrushPickerDialogKeepStrokeOnToolChange " + step++);
 		int newStrokeWidth = 80;
 
-		assertFalse("No progress bar found", mSolo.getCurrentProgressBars().isEmpty());
+		assertFalse("No progress bar found", mSolo.getCurrentViews(ProgressBar.class).isEmpty());
 		Log.i(PaintroidApplication.TAG, "testBrushPickerDialogKeepStrokeOnToolChange " + step++);
 		mSolo.setProgressBar(0, newStrokeWidth);
 		Log.i(PaintroidApplication.TAG, "testBrushPickerDialogKeepStrokeOnToolChange " + step++);
 		assertTrue("Waiting for set stroke width ", mSolo.waitForView(LinearLayout.class, 1, TIMEOUT));
 		Log.i(PaintroidApplication.TAG, "testBrushPickerDialogKeepStrokeOnToolChange " + step++);
 
-		assertFalse("No imge buttons found", mSolo.getCurrentImageButtons().isEmpty());
+		assertFalse("No imge buttons found", mSolo.getCurrentViews(ProgressBar.class).isEmpty());
 		Log.i(PaintroidApplication.TAG, "testBrushPickerDialogKeepStrokeOnToolChange " + step++);
 		mSolo.clickOnImageButton(0);
 		Log.i(PaintroidApplication.TAG, "testBrushPickerDialogKeepStrokeOnToolChange " + step++);
@@ -229,13 +229,13 @@ public class BrushPickerDialogIntegrationTest extends BaseIntegrationTestClass {
 		int newStrokeWidth = 0;
 		int minStrokeWidth = 1;
 
-		assertFalse("No progress bar found", mSolo.getCurrentProgressBars().isEmpty());
+		assertFalse("No progress bar found", mSolo.getCurrentViews(ProgressBar.class).isEmpty());
 		Log.i(PaintroidApplication.TAG, "testBrushPickerDialogTestMinimumBrushWidth " + step++);
 		mSolo.setProgressBar(0, newStrokeWidth);
 		Log.i(PaintroidApplication.TAG, "testBrushPickerDialogTestMinimumBrushWidth " + step++);
 		assertTrue("Waiting for set stroke width ", mSolo.waitForView(LinearLayout.class, 1, TIMEOUT));
 		Log.i(PaintroidApplication.TAG, "testBrushPickerDialogTestMinimumBrushWidth " + step++);
-		ArrayList<ProgressBar> progressBars = mSolo.getCurrentProgressBars();
+		ArrayList<ProgressBar> progressBars = mSolo.getCurrentViews(ProgressBar.class);
 		Log.i(PaintroidApplication.TAG, "testBrushPickerDialogTestMinimumBrushWidth " + step++);
 		assertEquals(progressBars.size(), 1);
 		Log.i(PaintroidApplication.TAG, "testBrushPickerDialogTestMinimumBrushWidth " + step++);
