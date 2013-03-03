@@ -33,6 +33,7 @@ import org.junit.Test;
 
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.test.UiThreadTest;
 
 public class CropCommandTest extends CommandTestSetup {
 
@@ -90,10 +91,12 @@ public class CropCommandTest extends CommandTestSetup {
 	}
 
 	@Test
+	@UiThreadTest
 	public void testIfBitmapIsNotCroppedWithInvalidBounds() throws InterruptedException, SecurityException,
 			IllegalArgumentException, NoSuchFieldException, IllegalAccessException {
 		mCommandUnderTest = new CropCommand(1, 1, 1, mBitmapUnderTest.getHeight());
-		Thread.sleep(50);
+		mCommandUnderTest.run(mCanvasUnderTest, mCanvasBitmapUnderTest);
+		Thread.sleep(100);
 		File fileToCroppedBitmap = (File) PrivateAccess.getMemberValue(BaseCommand.class, mCommandUnderTest,
 				"mFileToStoredBitmap");
 		if (fileToCroppedBitmap != null) {
@@ -101,7 +104,8 @@ public class CropCommandTest extends CommandTestSetup {
 			fail("bitmap must not be created with invalid Y bottom bound");
 		}
 		mCommandUnderTest = new CropCommand(1, 1, mBitmapUnderTest.getWidth(), 1);
-		Thread.sleep(50);
+		mCommandUnderTest.run(mCanvasUnderTest, mCanvasBitmapUnderTest);
+		Thread.sleep(100);
 		fileToCroppedBitmap = (File) PrivateAccess.getMemberValue(BaseCommand.class, mCommandUnderTest,
 				"mFileToStoredBitmap");
 		if (fileToCroppedBitmap != null) {
@@ -109,7 +113,8 @@ public class CropCommandTest extends CommandTestSetup {
 			fail("bitmap must not be created with invalid X right bound");
 		}
 		mCommandUnderTest = new CropCommand(-1, 1, 1, 1);
-		Thread.sleep(50);
+		mCommandUnderTest.run(mCanvasUnderTest, mCanvasBitmapUnderTest);
+		Thread.sleep(100);
 		fileToCroppedBitmap = (File) PrivateAccess.getMemberValue(BaseCommand.class, mCommandUnderTest,
 				"mFileToStoredBitmap");
 		if (fileToCroppedBitmap != null) {
@@ -117,13 +122,44 @@ public class CropCommandTest extends CommandTestSetup {
 			fail("bitmap must not be created with invalid X left bound");
 		}
 		mCommandUnderTest = new CropCommand(1, -1, 1, 1);
-		Thread.sleep(50);
+		mCommandUnderTest.run(mCanvasUnderTest, mCanvasBitmapUnderTest);
+		Thread.sleep(100);
 		fileToCroppedBitmap = (File) PrivateAccess.getMemberValue(BaseCommand.class, mCommandUnderTest,
 				"mFileToStoredBitmap");
 		if (fileToCroppedBitmap != null) {
 			fileToCroppedBitmap.delete();
 			fail("bitmap must not be created with invalid Y top bound");
 		}
-	}
 
+		mCommandUnderTest = new CropCommand(1, 1, 0, 1);
+		mCommandUnderTest.run(mCanvasUnderTest, mCanvasBitmapUnderTest);
+		Thread.sleep(100);
+		fileToCroppedBitmap = (File) PrivateAccess.getMemberValue(BaseCommand.class, mCommandUnderTest,
+				"mFileToStoredBitmap");
+		if (fileToCroppedBitmap != null) {
+			fileToCroppedBitmap.delete();
+			fail("bitmap must not be created with widthXRight < widthXLeft bound");
+		}
+
+		mCommandUnderTest = new CropCommand(0, 1, 1, 0);
+		mCommandUnderTest.run(mCanvasUnderTest, mCanvasBitmapUnderTest);
+		Thread.sleep(100);
+		fileToCroppedBitmap = (File) PrivateAccess.getMemberValue(BaseCommand.class, mCommandUnderTest,
+				"mFileToStoredBitmap");
+		if (fileToCroppedBitmap != null) {
+			fileToCroppedBitmap.delete();
+			fail("bitmap must not be created with widthYBottom < widthYTop bound");
+		}
+
+		mCommandUnderTest = new CropCommand(0, 0, mBitmapUnderTest.getWidth() - 1, mBitmapUnderTest.getHeight() - 1);
+		mCommandUnderTest.run(mCanvasUnderTest, mCanvasBitmapUnderTest);
+		Thread.sleep(100);
+		fileToCroppedBitmap = (File) PrivateAccess.getMemberValue(BaseCommand.class, mCommandUnderTest,
+				"mFileToStoredBitmap");
+		if (fileToCroppedBitmap != null) {
+			fileToCroppedBitmap.delete();
+			fail("bitmap must not be created because bounds are the same as original bitmap");
+		}
+
+	}
 }
