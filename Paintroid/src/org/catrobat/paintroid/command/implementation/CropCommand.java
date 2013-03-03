@@ -91,8 +91,8 @@ public class CropCommand extends BaseCommand {
 				return;
 			}
 			if (mCropCoordinateXLeft <= 0
-					&& mCropCoordinateXRight >= bitmap.getWidth() - 1
-					&& mCropCoordinateYBottom >= bitmap.getHeight() - 1
+					&& mCropCoordinateXRight == bitmap.getWidth()
+					&& mCropCoordinateYBottom == bitmap.getHeight()
 					&& mCropCoordinateYTop <= 0) {
 				Log.e(PaintroidApplication.TAG, " no need to crop ");
 				setChanged();

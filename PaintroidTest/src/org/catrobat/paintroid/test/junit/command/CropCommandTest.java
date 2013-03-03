@@ -33,7 +33,6 @@ import org.junit.Test;
 
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
-import android.test.UiThreadTest;
 
 public class CropCommandTest extends CommandTestSetup {
 
@@ -91,7 +90,6 @@ public class CropCommandTest extends CommandTestSetup {
 	}
 
 	@Test
-	@UiThreadTest
 	public void testIfBitmapIsNotCroppedWithInvalidBounds() throws InterruptedException, SecurityException,
 			IllegalArgumentException, NoSuchFieldException, IllegalAccessException {
 		mCommandUnderTest = new CropCommand(1, 1, 1, mBitmapUnderTest.getHeight());
@@ -151,7 +149,7 @@ public class CropCommandTest extends CommandTestSetup {
 			fail("bitmap must not be created with widthYBottom < widthYTop bound");
 		}
 
-		mCommandUnderTest = new CropCommand(0, 0, mBitmapUnderTest.getWidth() - 1, mBitmapUnderTest.getHeight() - 1);
+		mCommandUnderTest = new CropCommand(0, 0, mBitmapUnderTest.getWidth(), mBitmapUnderTest.getHeight());
 		mCommandUnderTest.run(mCanvasUnderTest, mCanvasBitmapUnderTest);
 		Thread.sleep(100);
 		fileToCroppedBitmap = (File) PrivateAccess.getMemberValue(BaseCommand.class, mCommandUnderTest,
